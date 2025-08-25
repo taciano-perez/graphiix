@@ -5,6 +5,7 @@ class Element {
     this.children = [];
     this.eventListeners = {};
     this.value = '';
+    this.files = [];
     this.classList = {
       classes: new Set(),
       add: function(cls){this.classes.add(cls);},
@@ -25,9 +26,9 @@ class Element {
   addEventListener(event, cb){
     this.eventListeners[event] = cb;
   }
-  trigger(event){
+  trigger(event, arg){
     if (this.eventListeners[event]){
-      this.eventListeners[event]();
+      this.eventListeners[event](arg);
     }
   }
   click(){
@@ -45,6 +46,12 @@ const clearButton = new Element();
 clearButton.id = 'clear';
 const invertedPattern = new Element();
 invertedPattern.id = 'invertedPattern';
+const saveButton = new Element();
+saveButton.id = 'save';
+const loadButton = new Element();
+loadButton.id = 'load';
+const fileInput = new Element();
+fileInput.id = 'fileInput';
 
 const documentStub = {
   eventListeners: {},
@@ -62,6 +69,9 @@ const documentStub = {
     if (id === 'bitPattern') return bitPattern;
     if (id === 'clear') return clearButton;
     if (id === 'invertedPattern') return invertedPattern;
+    if (id === 'save') return saveButton;
+    if (id === 'load') return loadButton;
+    if (id === 'fileInput') return fileInput;
     return null;
   },
   createElement(tag){
@@ -70,6 +80,19 @@ const documentStub = {
 };
 
 global.document = documentStub;
+global.URL = {
+  createObjectURL: () => 'blob:mock',
+  revokeObjectURL: () => {}
+};
+
+class MockFileReader {
+  readAsText(file){
+    if (this.onload){
+      this.onload({ target: { result: file.content } });
+    }
+  }
+}
+global.FileReader = MockFileReader;
 
 require('./script.js');
 
@@ -101,5 +124,19 @@ clearButton.click();
 assert(grid.children.every(c => !c.classList.contains('active')), 'all cells should be inactive after clear');
 assert.strictEqual(bitPattern.value, '', 'bit pattern should be cleared');
 assert.strictEqual(invertedPattern.value, '', 'inverted pattern should be cleared');
+
+// test save functionality
+cell.click();
+saveButton.click();
+assert.strictEqual(bitPattern.value, expectedPattern, 'save should generate bit pattern before downloading');
+
+// test load functionality
+const loadPattern = '01000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+const loadInverted = '00000010\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+fileInput.files = [{ content: loadPattern }];
+fileInput.trigger('change', { target: fileInput });
+assert(grid.children[1].classList.contains('active'), 'grid should reflect loaded pattern');
+assert.strictEqual(bitPattern.value, loadPattern, 'bit pattern should match loaded file');
+assert.strictEqual(invertedPattern.value, loadInverted, 'inverted pattern should update after load');
 
 console.log('All tests passed');

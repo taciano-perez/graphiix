@@ -25,6 +25,11 @@ body {
     gap: 20px;
 }
 
+.button-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(8, 50px);
