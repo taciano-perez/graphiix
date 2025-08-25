@@ -15,7 +15,8 @@ class Element {
           this.classes.add(cls);
         }
       },
-      contains: function(cls){return this.classes.has(cls);}
+      contains: function(cls){return this.classes.has(cls);},
+      remove: function(cls){this.classes.delete(cls);}
     };
   }
   appendChild(child){
@@ -24,10 +25,13 @@ class Element {
   addEventListener(event, cb){
     this.eventListeners[event] = cb;
   }
-  click(){
-    if (this.eventListeners['click']){
-      this.eventListeners['click']();
+  trigger(event){
+    if (this.eventListeners[event]){
+      this.eventListeners[event]();
     }
+  }
+  click(){
+    this.trigger('click');
   }
 }
 
@@ -37,6 +41,10 @@ const generateButton = new Element();
 generateButton.id = 'generate';
 const bitPattern = new Element();
 bitPattern.id = 'bitPattern';
+const clearButton = new Element();
+clearButton.id = 'clear';
+const invertedPattern = new Element();
+invertedPattern.id = 'invertedPattern';
 
 const documentStub = {
   eventListeners: {},
@@ -52,6 +60,8 @@ const documentStub = {
     if (id === 'grid') return grid;
     if (id === 'generate') return generateButton;
     if (id === 'bitPattern') return bitPattern;
+    if (id === 'clear') return clearButton;
+    if (id === 'invertedPattern') return invertedPattern;
     return null;
   },
   createElement(tag){
@@ -78,5 +88,18 @@ cell.click(); // activate first cell again
 generateButton.click();
 const expectedPattern = '10000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
 assert.strictEqual(bitPattern.value, expectedPattern, 'bit pattern should reflect grid state');
+const expectedInverted = '00000001\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+assert.strictEqual(invertedPattern.value, expectedInverted, 'inverted pattern should mirror bit pattern');
+
+// test inversion on manual input
+bitPattern.value = '00000001';
+bitPattern.trigger('input');
+assert.strictEqual(invertedPattern.value, '10000000', 'inverted pattern should update on input');
+
+// test clear functionality
+clearButton.click();
+assert(grid.children.every(c => !c.classList.contains('active')), 'all cells should be inactive after clear');
+assert.strictEqual(bitPattern.value, '', 'bit pattern should be cleared');
+assert.strictEqual(invertedPattern.value, '', 'inverted pattern should be cleared');
 
 console.log('All tests passed');

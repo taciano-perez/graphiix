@@ -7,9 +7,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="grid" class="grid"></div>
+    <div class="grid-wrapper">
+        <div id="grid" class="grid"></div>
+        <button id="clear">Clear</button>
+    </div>
     <button id="generate">Generate Bit Pattern</button>
-    <textarea id="bitPattern" rows="8" cols="8" readonly></textarea>
+    <div class="textarea-wrapper">
+        <div class="textarea-group">
+            <textarea id="bitPattern" rows="8" cols="8"></textarea>
+            <div class="caption">bit pattern</div>
+        </div>
+        <div class="textarea-group">
+            <textarea id="invertedPattern" rows="8" cols="8" readonly></textarea>
+            <div class="caption">inverted bit pattern</div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
