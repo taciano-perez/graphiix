@@ -1,0 +1,11 @@
+{
+  "name": "graphiix",
+  "version": "1.0.0",
+  "description": "GraphIIx - an Apple II graphics editor",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
