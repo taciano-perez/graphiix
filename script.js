@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('grid');
     const generateButton = document.getElementById('generate');
     const bitPatternArea = document.getElementById('bitPattern');
+    const clearButton = document.getElementById('clear');
+    const invertedPatternArea = document.getElementById('invertedPattern');
 
     for (let i = 0; i < 64; i++) {
         const cell = document.createElement('div');
@@ -10,6 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.classList.toggle('active');
         });
         grid.appendChild(cell);
+    }
+
+    const updateInverted = () => {
+        if (!invertedPatternArea) return;
+        const lines = bitPatternArea.value.split('\n');
+        const inverted = lines.map(line => line.split('').reverse().join(''));
+        invertedPatternArea.value = inverted.join('\n');
+    };
+
+    if (bitPatternArea) {
+        bitPatternArea.addEventListener('input', updateInverted);
     }
 
     if (generateButton && bitPatternArea) {
@@ -25,6 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 rows.push(line);
             }
             bitPatternArea.value = rows.join('\n');
+            updateInverted();
+        });
+    }
+
+    if (clearButton) {
+        clearButton.addEventListener('click', () => {
+            const cells = grid.children;
+            for (let i = 0; i < cells.length; i++) {
+                cells[i].classList.remove('active');
+            }
+            if (bitPatternArea) bitPatternArea.value = '';
+            if (invertedPatternArea) invertedPatternArea.value = '';
         });
     }
 });

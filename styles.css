@@ -8,6 +8,12 @@ body {
     background-color: #f4f4f4;
 }
 
+.grid-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(8, 50px);
@@ -31,7 +37,28 @@ button {
     margin-top: 20px;
 }
 
+#clear {
+    margin-top: 0;
+}
+
 textarea {
     margin-top: 10px;
     font-family: monospace;
+}
+
+.textarea-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+.textarea-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.caption {
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: center;
 }
