@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bitPatternArea = document.getElementById('bitPattern');
     const clearButton = document.getElementById('clear');
     const invertedPatternArea = document.getElementById('invertedPattern');
+    const hexPatternArea = document.getElementById('hexPattern');
     const saveButton = document.getElementById('save');
     const loadButton = document.getElementById('load');
     const fileInput = document.getElementById('fileInput');
@@ -52,10 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateInverted = () => {
-        if (!invertedPatternArea) return;
+        if (!bitPatternArea) return;
         const lines = bitPatternArea.value.split('\n');
         const inverted = lines.map(line => line.split('').reverse().join(''));
-        invertedPatternArea.value = inverted.join('\n');
+        if (invertedPatternArea) {
+            invertedPatternArea.value = inverted.join('\n');
+        }
+        if (hexPatternArea) {
+            const hex = inverted.map(line => {
+                if (!line.trim()) return '';
+                const value = parseInt(line, 2);
+                return '$' + value.toString(16).toUpperCase().padStart(2, '0');
+            });
+            hexPatternArea.value = hex.join('\n');
+        }
     };
 
     if (bitPatternArea) {
@@ -102,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (bitPatternArea) bitPatternArea.value = '';
             if (invertedPatternArea) invertedPatternArea.value = '';
+            if (hexPatternArea) hexPatternArea.value = '';
         });
     }
 });
