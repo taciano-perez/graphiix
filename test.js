@@ -4,6 +4,7 @@ class Element {
   constructor() {
     this.children = [];
     this.eventListeners = {};
+    this.value = '';
     this.classList = {
       classes: new Set(),
       add: function(cls){this.classes.add(cls);},
@@ -32,6 +33,10 @@ class Element {
 
 const grid = new Element();
 grid.id = 'grid';
+const generateButton = new Element();
+generateButton.id = 'generate';
+const bitPattern = new Element();
+bitPattern.id = 'bitPattern';
 
 const documentStub = {
   eventListeners: {},
@@ -44,7 +49,10 @@ const documentStub = {
     }
   },
   getElementById(id){
-    return id === 'grid' ? grid : null;
+    if (id === 'grid') return grid;
+    if (id === 'generate') return generateButton;
+    if (id === 'bitPattern') return bitPattern;
+    return null;
   },
   createElement(tag){
     return new Element();
@@ -64,5 +72,11 @@ cell.click();
 assert(cell.classList.contains('active'), 'cell should be active after first click');
 cell.click();
 assert(!cell.classList.contains('active'), 'cell should not be active after second click');
+
+// test bit pattern generation
+cell.click(); // activate first cell again
+generateButton.click();
+const expectedPattern = '10000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+assert.strictEqual(bitPattern.value, expectedPattern, 'bit pattern should reflect grid state');
 
 console.log('All tests passed');

@@ -1,5 +1,6 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -24,4 +25,13 @@ body {
 
 .cell.active {
     background-color: black;
+}
+
+button {
+    margin-top: 20px;
+}
+
+textarea {
+    margin-top: 10px;
+    font-family: monospace;
 }
