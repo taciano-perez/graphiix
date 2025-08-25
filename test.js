@@ -98,7 +98,7 @@ require('./script.js');
 
 document.dispatchEvent('DOMContentLoaded');
 
-assert.strictEqual(grid.children.length, 64, 'should create 64 cells');
+assert.strictEqual(grid.children.length, 56, 'should create 56 cells');
 
 const cell = grid.children[0];
 cell.click();
@@ -109,9 +109,9 @@ assert(!cell.classList.contains('active'), 'cell should not be active after seco
 // test bit pattern generation
 cell.click(); // activate first cell again
 generateButton.click();
-const expectedPattern = '10000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+const expectedPattern = '01000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
 assert.strictEqual(bitPattern.value, expectedPattern, 'bit pattern should reflect grid state');
-const expectedInverted = '00000001\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+const expectedInverted = '00000010\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
 assert.strictEqual(invertedPattern.value, expectedInverted, 'inverted pattern should mirror bit pattern');
 
 // test inversion on manual input
@@ -131,8 +131,8 @@ saveButton.click();
 assert.strictEqual(bitPattern.value, expectedPattern, 'save should generate bit pattern before downloading');
 
 // test load functionality
-const loadPattern = '01000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
-const loadInverted = '00000010\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+const loadPattern = '00100000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+const loadInverted = '00000100\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
 fileInput.files = [{ content: loadPattern }];
 fileInput.trigger('change', { target: fileInput });
 assert(grid.children[1].classList.contains('active'), 'grid should reflect loaded pattern');
