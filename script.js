@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadButton = document.getElementById('load');
     const fileInput = document.getElementById('fileInput');
 
-    for (let i = 0; i < 64; i++) {
+    const ROWS = 8;
+    const COLS = 7;
+    for (let i = 0; i < ROWS * COLS; i++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
         cell.addEventListener('click', () => {
@@ -20,10 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const generatePattern = () => {
         const cells = grid.children;
         const rows = [];
-        for (let r = 0; r < 8; r++) {
-            let line = '';
-            for (let c = 0; c < 8; c++) {
-                const cell = cells[r * 8 + c];
+        for (let r = 0; r < ROWS; r++) {
+            let line = '0';
+            for (let c = 0; c < COLS; c++) {
+                const cell = cells[r * COLS + c];
                 line += cell.classList.contains('active') ? '1' : '0';
             }
             rows.push(line);
@@ -37,10 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const applyPatternToGrid = (pattern) => {
         const lines = pattern.split(/\r?\n/);
         const cells = grid.children;
-        for (let r = 0; r < 8; r++) {
-            for (let c = 0; c < 8; c++) {
-                const cell = cells[r * 8 + c];
-                if (lines[r] && lines[r][c] === '1') {
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const cell = cells[r * COLS + c];
+                if (lines[r] && lines[r][c + 1] === '1') {
                     cell.classList.add('active');
                 } else {
                     cell.classList.remove('active');

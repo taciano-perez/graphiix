@@ -1,6 +1,6 @@
 # GraphIIx
 
-GraphIIx is a minimal web-based pixel editor inspired by the Apple II. It displays an 8×8 grid of cells that can be toggled on and off to create simple monochrome graphics.
+GraphIIx is a minimal web-based pixel editor inspired by the Apple II. It displays an 8×7 grid of cells that can be toggled on and off to create simple monochrome graphics.
 
 ## Running the app
 
@@ -18,5 +18,5 @@ This executes `test.js`, which stubs the DOM and exercises the grid logic.
 
 ## Design notes
 
-On `DOMContentLoaded`, `script.js` constructs a grid of 64 `<div>` elements inside the `#grid` container. Each cell listens for click events that toggle the `active` class. `styles.css` lays out the 8×8 grid and colours active cells black. The lightweight structure makes it easy for developers to extend the editor with additional features such as larger canvases or colour support.
+On `DOMContentLoaded`, `script.js` constructs a grid of 56 `<div>` elements inside the `#grid` container. Each cell listens for click events that toggle the `active` class. `styles.css` lays out the 8×7 grid and colours active cells black. The lightweight structure makes it easy for developers to extend the editor with additional features such as larger canvases or colour support.
 
