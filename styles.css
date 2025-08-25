@@ -1,11 +1,22 @@
+@font-face {
+    font-family: 'PrintChar21';
+    src: url('font/PrintChar21.ttf') format('truetype');
+}
+
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
+    justify-content: flex-start;
+    min-height: 100vh;
     margin: 0;
     background-color: #f4f4f4;
+}
+
+.title {
+    font-family: 'PrintChar21', sans-serif;
+    color: #006400;
+    margin-top: 20px;
 }
 
 .grid-wrapper {
