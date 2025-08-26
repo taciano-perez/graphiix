@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bitPatternArea = document.getElementById('bitPattern');
     const clearButton = document.getElementById('clear');
     const hexPatternArea = document.getElementById('hexPattern');
+    const decPatternArea = document.getElementById('decPattern');
     const saveButton = document.getElementById('save');
     const loadButton = document.getElementById('load');
     const fileInput = document.getElementById('fileInput');
@@ -62,6 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             hexPatternArea.value = hex.join('\n');
         }
+        if (decPatternArea) {
+            const dec = lines.map(line => {
+                if (!line.trim()) return '';
+                const value = parseInt(line, 2);
+                return value.toString(10);
+            });
+            decPatternArea.value = dec.join('\n');
+        }
     };
 
     if (bitPatternArea) {
@@ -108,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (bitPatternArea) bitPatternArea.value = '';
             if (hexPatternArea) hexPatternArea.value = '';
+            if (decPatternArea) decPatternArea.value = '';
         });
     }
 });

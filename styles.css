@@ -3,6 +3,11 @@
     src: url('font/PrintChar21.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'PRNumber3';
+    src: url('font/PRNumber3.ttf') format('truetype');
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -21,7 +26,8 @@ body {
 
 .grid-wrapper {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
 }
 
@@ -51,6 +57,7 @@ body {
 
 button {
     margin-top: 20px;
+    font-family: 'PRNumber3', sans-serif;
 }
 
 #clear {
@@ -77,4 +84,5 @@ textarea {
     margin-top: 5px;
     font-size: 14px;
     text-align: center;
+    font-family: 'PRNumber3', sans-serif;
 }
