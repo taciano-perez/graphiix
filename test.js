@@ -46,6 +46,8 @@ const clearButton = new Element();
 clearButton.id = 'clear';
 const hexPattern = new Element();
 hexPattern.id = 'hexPattern';
+const decPattern = new Element();
+decPattern.id = 'decPattern';
 const saveButton = new Element();
 saveButton.id = 'save';
 const loadButton = new Element();
@@ -69,6 +71,7 @@ const documentStub = {
     if (id === 'bitPattern') return bitPattern;
     if (id === 'clear') return clearButton;
     if (id === 'hexPattern') return hexPattern;
+    if (id === 'decPattern') return decPattern;
     if (id === 'save') return saveButton;
     if (id === 'load') return loadButton;
     if (id === 'fileInput') return fileInput;
@@ -113,17 +116,21 @@ const expectedPattern = '01000000\n00000000\n00000000\n00000000\n00000000\n00000
 assert.strictEqual(bitPattern.value, expectedPattern, 'bit pattern should reflect grid state');
 const expectedHex = '$40\n$00\n$00\n$00\n$00\n$00\n$00\n$00';
 assert.strictEqual(hexPattern.value, expectedHex, 'hex pattern should reflect bit pattern');
+const expectedDec = '64\n0\n0\n0\n0\n0\n0\n0';
+assert.strictEqual(decPattern.value, expectedDec, 'dec pattern should reflect bit pattern');
 
 // test hex update on manual input
 bitPattern.value = '00000001';
 bitPattern.trigger('input');
 assert.strictEqual(hexPattern.value, '$01', 'hex pattern should update on input');
+assert.strictEqual(decPattern.value, '1', 'dec pattern should update on input');
 
 // test clear functionality
 clearButton.click();
 assert(grid.children.every(c => !c.classList.contains('active')), 'all cells should be inactive after clear');
 assert.strictEqual(bitPattern.value, '', 'bit pattern should be cleared');
 assert.strictEqual(hexPattern.value, '', 'hex pattern should be cleared');
+assert.strictEqual(decPattern.value, '', 'dec pattern should be cleared');
 
 // test save functionality
 cell.click();
@@ -133,10 +140,12 @@ assert.strictEqual(bitPattern.value, expectedPattern, 'save should generate bit 
 // test load functionality
 const loadPattern = '00100000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
 const loadHex = '$20\n$00\n$00\n$00\n$00\n$00\n$00\n$00';
+const loadDec = '32\n0\n0\n0\n0\n0\n0\n0';
 fileInput.files = [{ content: loadPattern }];
 fileInput.trigger('change', { target: fileInput });
 assert(grid.children[1].classList.contains('active'), 'grid should reflect loaded pattern');
 assert.strictEqual(bitPattern.value, loadPattern, 'bit pattern should match loaded file');
 assert.strictEqual(hexPattern.value, loadHex, 'hex pattern should update after load');
+assert.strictEqual(decPattern.value, loadDec, 'dec pattern should update after load');
 
 console.log('All tests passed');
