@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateButton = document.getElementById('generate');
     const bitPatternArea = document.getElementById('bitPattern');
     const clearButton = document.getElementById('clear');
-    const invertedPatternArea = document.getElementById('invertedPattern');
     const hexPatternArea = document.getElementById('hexPattern');
     const saveButton = document.getElementById('save');
     const loadButton = document.getElementById('load');
@@ -33,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const pattern = rows.join('\n');
         if (bitPatternArea) bitPatternArea.value = pattern;
-        updateInverted();
+        updateHex();
         return pattern;
     };
 
@@ -52,15 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const updateInverted = () => {
+    const updateHex = () => {
         if (!bitPatternArea) return;
         const lines = bitPatternArea.value.split('\n');
-        const inverted = lines.map(line => line.split('').reverse().join(''));
-        if (invertedPatternArea) {
-            invertedPatternArea.value = inverted.join('\n');
-        }
         if (hexPatternArea) {
-            const hex = inverted.map(line => {
+            const hex = lines.map(line => {
                 if (!line.trim()) return '';
                 const value = parseInt(line, 2);
                 return '$' + value.toString(16).toUpperCase().padStart(2, '0');
@@ -70,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (bitPatternArea) {
-        bitPatternArea.addEventListener('input', updateInverted);
+        bitPatternArea.addEventListener('input', updateHex);
     }
 
     if (generateButton && bitPatternArea) {
@@ -99,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const content = ev.target.result.trim();
                 bitPatternArea.value = content;
                 applyPatternToGrid(content);
-                updateInverted();
+                updateHex();
             };
             reader.readAsText(file);
         });
@@ -112,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 cells[i].classList.remove('active');
             }
             if (bitPatternArea) bitPatternArea.value = '';
-            if (invertedPatternArea) invertedPatternArea.value = '';
             if (hexPatternArea) hexPatternArea.value = '';
         });
     }
