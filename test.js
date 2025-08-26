@@ -48,6 +48,8 @@ const hexPattern = new Element();
 hexPattern.id = 'hexPattern';
 const decPattern = new Element();
 decPattern.id = 'decPattern';
+const basicCommands = new Element();
+basicCommands.id = 'basicCommands';
 const saveButton = new Element();
 saveButton.id = 'save';
 const loadButton = new Element();
@@ -72,6 +74,7 @@ const documentStub = {
     if (id === 'clear') return clearButton;
     if (id === 'hexPattern') return hexPattern;
     if (id === 'decPattern') return decPattern;
+    if (id === 'basicCommands') return basicCommands;
     if (id === 'save') return saveButton;
     if (id === 'load') return loadButton;
     if (id === 'fileInput') return fileInput;
@@ -118,12 +121,15 @@ const expectedHex = '$40\n$00\n$00\n$00\n$00\n$00\n$00\n$00';
 assert.strictEqual(hexPattern.value, expectedHex, 'hex pattern should reflect bit pattern');
 const expectedDec = '64\n0\n0\n0\n0\n0\n0\n0';
 assert.strictEqual(decPattern.value, expectedDec, 'dec pattern should reflect bit pattern');
+const expectedBasic = '100 POKE BA%,64\n110 POKE BA% + 1024,0\n120 POKE BA% + 2048,0\n130 POKE BA% + 3072,0\n140 POKE BA% + 4096,0\n150 POKE BA% + 5120,0\n160 POKE BA% + 6144,0\n170 POKE BA% + 7168,0';
+assert.strictEqual(basicCommands.value, expectedBasic, 'BASIC commands should reflect dec pattern');
 
 // test hex update on manual input
 bitPattern.value = '00000001';
 bitPattern.trigger('input');
 assert.strictEqual(hexPattern.value, '$01', 'hex pattern should update on input');
 assert.strictEqual(decPattern.value, '1', 'dec pattern should update on input');
+assert.strictEqual(basicCommands.value, '100 POKE BA%,1', 'BASIC commands should update on input');
 
 // test clear functionality
 clearButton.click();
@@ -131,6 +137,7 @@ assert(grid.children.every(c => !c.classList.contains('active')), 'all cells sho
 assert.strictEqual(bitPattern.value, '', 'bit pattern should be cleared');
 assert.strictEqual(hexPattern.value, '', 'hex pattern should be cleared');
 assert.strictEqual(decPattern.value, '', 'dec pattern should be cleared');
+assert.strictEqual(basicCommands.value, '', 'BASIC commands should be cleared');
 
 // test save functionality
 cell.click();
@@ -147,5 +154,7 @@ assert(grid.children[1].classList.contains('active'), 'grid should reflect loade
 assert.strictEqual(bitPattern.value, loadPattern, 'bit pattern should match loaded file');
 assert.strictEqual(hexPattern.value, loadHex, 'hex pattern should update after load');
 assert.strictEqual(decPattern.value, loadDec, 'dec pattern should update after load');
+const loadBasic = '100 POKE BA%,32\n110 POKE BA% + 1024,0\n120 POKE BA% + 2048,0\n130 POKE BA% + 3072,0\n140 POKE BA% + 4096,0\n150 POKE BA% + 5120,0\n160 POKE BA% + 6144,0\n170 POKE BA% + 7168,0';
+assert.strictEqual(basicCommands.value, loadBasic, 'BASIC commands should update after load');
 
 console.log('All tests passed');
