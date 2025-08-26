@@ -25,13 +25,15 @@ body {
 }
 
 .grid-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    position: relative;
+    display: inline-block;
 }
 
 .button-wrapper {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
 }
