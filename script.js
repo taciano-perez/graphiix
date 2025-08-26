@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearButton = document.getElementById('clear');
     const hexPatternArea = document.getElementById('hexPattern');
     const decPatternArea = document.getElementById('decPattern');
+    const basicCommandsArea = document.getElementById('basicCommands');
     const saveButton = document.getElementById('save');
     const loadButton = document.getElementById('load');
     const fileInput = document.getElementById('fileInput');
@@ -55,6 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateHex = () => {
         if (!bitPatternArea) return;
         const lines = bitPatternArea.value.split('\n');
+        const dec = lines.map(line => {
+            if (!line.trim()) return '';
+            const value = parseInt(line, 2);
+            return value.toString(10);
+        });
         if (hexPatternArea) {
             const hex = lines.map(line => {
                 if (!line.trim()) return '';
@@ -64,12 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
             hexPatternArea.value = hex.join('\n');
         }
         if (decPatternArea) {
-            const dec = lines.map(line => {
-                if (!line.trim()) return '';
-                const value = parseInt(line, 2);
-                return value.toString(10);
-            });
             decPatternArea.value = dec.join('\n');
+        }
+        if (basicCommandsArea) {
+            const basic = dec.map((value, index) => {
+                if (!lines[index].trim()) return '';
+                const lineNumber = 100 + index * 10;
+                const offset = index * 1024;
+                const address = offset === 0 ? 'BA%' : `BA% + ${offset}`;
+                return `${lineNumber} POKE ${address},${value}`;
+            });
+            basicCommandsArea.value = basic.join('\n');
         }
     };
 
@@ -118,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (bitPatternArea) bitPatternArea.value = '';
             if (hexPatternArea) hexPatternArea.value = '';
             if (decPatternArea) decPatternArea.value = '';
+            if (basicCommandsArea) basicCommandsArea.value = '';
         });
     }
 });
