@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cell = cells[r * COLS + c];
                 line += cell.classList.contains('active') ? '1' : '0';
             }
+            line = line.split('').reverse().join('');
             rows.push(line);
         }
         const pattern = rows.join('\n');

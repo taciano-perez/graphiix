@@ -3,6 +3,7 @@
 GraphIIx is a minimal web-based pixel editor inspired by the Apple II. It displays an 8×7 grid of cells that can be toggled on and off to create simple monochrome graphics.
 
 The editor can generate three representations of the drawing: a raw bit pattern, a hexadecimal pattern and a decimal pattern.
+When generating, each bit pattern line is horizontally inverted so that a sequence like `10001000` becomes `00010001`.
 
 ## Running the app
 

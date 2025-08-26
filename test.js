@@ -115,13 +115,13 @@ assert(!cell.classList.contains('active'), 'cell should not be active after seco
 // test bit pattern generation
 cell.click(); // activate first cell again
 generateButton.click();
-const expectedPattern = '01000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
+const expectedPattern = '00000010\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n00000000';
 assert.strictEqual(bitPattern.value, expectedPattern, 'bit pattern should reflect grid state');
-const expectedHex = '$40\n$00\n$00\n$00\n$00\n$00\n$00\n$00';
+const expectedHex = '$02\n$00\n$00\n$00\n$00\n$00\n$00\n$00';
 assert.strictEqual(hexPattern.value, expectedHex, 'hex pattern should reflect bit pattern');
-const expectedDec = '64\n0\n0\n0\n0\n0\n0\n0';
+const expectedDec = '2\n0\n0\n0\n0\n0\n0\n0';
 assert.strictEqual(decPattern.value, expectedDec, 'dec pattern should reflect bit pattern');
-const expectedBasic = '100 POKE BA%,64\n110 POKE BA% + 1024,0\n120 POKE BA% + 2048,0\n130 POKE BA% + 3072,0\n140 POKE BA% + 4096,0\n150 POKE BA% + 5120,0\n160 POKE BA% + 6144,0\n170 POKE BA% + 7168,0';
+const expectedBasic = '100 POKE BA%,2\n110 POKE BA% + 1024,0\n120 POKE BA% + 2048,0\n130 POKE BA% + 3072,0\n140 POKE BA% + 4096,0\n150 POKE BA% + 5120,0\n160 POKE BA% + 6144,0\n170 POKE BA% + 7168,0';
 assert.strictEqual(basicCommands.value, expectedBasic, 'BASIC commands should reflect dec pattern');
 
 // test hex update on manual input
